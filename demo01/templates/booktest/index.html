@@ -13,9 +13,9 @@
     {% endif%}
     <br>
 
-
-    <a href="/list">进入列表页</a>
-
-
+    {# 超级链接硬编码 #}
+    {#<a href="/list">进入列表页</a>#}
+    {# 去除硬编码 #}
+    <a href="{% url 'booktest:list' %}">进入列表页</a>
 </body>
 </html>

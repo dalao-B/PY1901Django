@@ -8,13 +8,16 @@
     <h1>图书详情页</h1>
     <h2>书名:{{book.btitle}}</h2>
     <ul>
+
         {% for hero in book.heroinfo_set.all %}
             <li>{{hero.hname}}--{{hero.hcontent}}</li>
         {% empty %}
             <h3>没有角色信息</h3>
+
         {% endfor %}
     </ul>
 
-    <a href="/list">返回列表页</a>
+    {#<a href="/list">返回列表页</a>#}
+    <a href="{% url 'booktest:list' %}">返回列表页</a>
 </body>
 </html>
