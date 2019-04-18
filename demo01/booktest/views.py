@@ -33,3 +33,9 @@ def list(request):
     # result = template.render(context=context)
     # return HttpResponse(result)
     # return HttpResponse("liebiaoye")
+
+
+def delete(request, id):
+    BookInfo.objects.get(pk=id).delete()
+    booklist = BookInfo.objects.all()
+    return render(request, 'booktest/list.html',{"booklist": booklist})
