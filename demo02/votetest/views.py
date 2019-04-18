@@ -14,7 +14,7 @@ def index(request):
 def detail(request, id):
     question = QuestionInfo.objects.get(pk=id)
     vote = question.voteinfo_set.all()
-    print(question.qtitle)
+    # print(question.qtitle)
     return render(request, 'votetest/detail.html', {"vote":vote,"question":question})
 
 
