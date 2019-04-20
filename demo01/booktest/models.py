@@ -43,3 +43,30 @@ class HeroInfo(models.Model):
     sname.short_description = "姓名"
 
 
+class Goods(models.Model):
+    name = models.CharField(max_length=20)
+    @classmethod
+    def creatr(cls, name):
+        return cls(name=name)
+
+
+class GoodsManage(models.Manager):
+    def create_book(self, name):
+        goods =  self.model()
+        goods.name = name
+        return goods
+
+
+class Goods1(models.Model):
+    name = models.CharField(max_length=20)
+    gdmanager = GoodsManage()
+
+
+class GoodsManage2(models.Manager):
+    def create_book(self, name):
+        return self.create(name = name)
+
+
+class Goods2(models.Model):
+    name = models.CharField(max_length=20)
+    gdmanager = GoodsManage2()

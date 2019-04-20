@@ -65,3 +65,61 @@ def addherohandler(request):
     hero.save()
 
     return HttpResponseRedirect("/detail/"+str(bookid)+"/",{"book":book})
+
+
+def addbook(request):
+    # return HttpResponse("aaaaaaaaaaaaaaaa")
+    return render(request, 'booktest/addbook.html')
+
+
+def addbookhandler(request):
+    btitle = request.POST["btitle"]
+    bpub_date = request.POST["bpub_date"]
+    book = BookInfo()
+    book.btitle = btitle
+    book.bpub_date = bpub_date
+    book.save()
+    return HttpResponseRedirect("/list")
+
+
+def updatebook(request, bookid):
+    book = BookInfo.objects.get(pk=bookid)
+    return render(request, 'booktest/updatebook.html', {"book":book})
+
+
+def updatebookhandler(request, bookid):
+    btitle = request.POST["btitle"]
+    bpub_date = request.POST["bpub_date"]
+    book = BookInfo.objects.get(pk=bookid)
+    book.btitle = btitle
+    book.bpub_date = bpub_date
+    book.save()
+    return HttpResponseRedirect("/list")
+
+
+def herodelete(request, heroid):
+    try:
+        hero = HeroInfo.objects.get(pk=heroid)
+        book = hero.hbook
+        hero.delete()
+        return HttpResponseRedirect('/detail/'+str(book.id)+"/",{"book":book})
+    except:
+        return HttpResponse("删除失败！！！")
+
+
+def updatehero(request, heroid):
+    hero = HeroInfo.objects.get(pk=heroid)
+    return render(request, 'booktest/updatehero.html',{"hero":hero})
+
+
+def updateherohandler(request, heroid):
+    hname = request.POST["heroname"]
+    hgender = request.POST["sex"]
+    hcontent = request.POST["herocontent"]
+    hero = HeroInfo.objects.get(pk=heroid)
+    book= hero.hbook
+    hero.hname = hname
+    hero.hgender = hgender
+    hero.hcontent = hcontent
+    hero.save()
+    return HttpResponseRedirect('/detail/'+str(book.id)+"/",{"book":book})

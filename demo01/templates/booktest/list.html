@@ -15,6 +15,7 @@
             <li>
                 <a href="{% url 'booktest:detail' book.id %}">{{book.btitle}}</a>
                 <a href="{% url 'booktest:delete' book.id %}">删除</a>
+                <a href="{% url 'booktest:updatebook' book.id %}">编辑</a>
             </li>
 
             {% empty %}
@@ -22,6 +23,8 @@
             {% endfor %}
         </ul>
         {#<a href="/">返回首页</a>#}
+        <a href="{% url 'booktest:addbook' %}">添加图书</a>
+        <br>
         <a href="{% url 'booktest:index' %}">返回首页</a>
     </div>
 

@@ -13,7 +13,12 @@
         <ul>
 
             {% for hero in book.heroinfo_set.all %}
-                <li>{{hero.hname}}--{{hero.hcontent}}</li>
+                <li>
+                    <a>{{hero.hname}}--{{hero.hcontent}}</a>
+                    <a href="{% url 'booktest:herodelete' hero.id  %}">删除</a>
+                    <a href="{% url 'booktest:updatehero' hero.id  %}">编辑</a>
+                </li>
+
             {% empty %}
                 <h3>没有角色信息</h3>
 
