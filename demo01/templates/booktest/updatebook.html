@@ -12,7 +12,6 @@
         <form action="{% url 'booktest:updatebookhandler' book.id %}" method="post">
             书名：<input type="text" name="btitle" value="{{book.btitle}}">
             <br>
-            <br>
             时间：<input type="datetime-local" name="bpub_date" value="{{book.bpub_date}}">
             <br>
             <input type="submit" value="修改">

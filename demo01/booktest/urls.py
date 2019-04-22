@@ -5,6 +5,7 @@ app_name = "booktest"
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^login/$',views.login, name='login'),
     url(r'^list/$',views.list, name='list'),
     url(r'^detail/([0-9]+)/$', views.detail, name='detail'),
     url(r'^delete/([0-9]+)/$', views.delete, name='delete'),

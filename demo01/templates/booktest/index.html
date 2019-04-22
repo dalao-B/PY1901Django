@@ -12,7 +12,7 @@
         {% if username %}
             <h2>欢迎：<a href="#">{{username}}</a> </h2>
         {% else %}
-            <h2>没有登录</h2>
+            <a href="{% url 'booktest:login' %}">登录</a>
         {% endif%}
         <br>
         <img src="/static/img/1.png" alt="加载图片失败" width="1100px">

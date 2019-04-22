@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect, reverse
 from django.template import loader, RequestContext
 from .models import BookInfo, HeroInfo
 
@@ -6,10 +6,17 @@ from .models import BookInfo, HeroInfo
 from django.http import HttpResponse, HttpResponseRedirect
 
 
+def login(request):
+    if request.method == 'GET':
+        return render(request, 'booktest/login.html')
+    elif request.method == 'POST':
+        request.session['username'] = request.POST["username"]
+        return redirect(reverse('booktest:index'))
+
+
 def index(request):
     # template = loader.get_template('booktest/index.html')
-    context = {"username":"aaa"}
-    return render(request, 'booktest/index.html', context)
+    return render(request, 'booktest/index.html',{'username':request.session.get("username")})
     # result = template.render(context=context)
     # return HttpResponse(result)
     # return HttpResponse("index")
@@ -40,7 +47,8 @@ def delete(request, id):
         BookInfo.objects.get(pk=id).delete()
         booklist = BookInfo.objects.all()
         # return render(request, 'booktest/list.html',{"booklist": booklist})
-        return HttpResponseRedirect('/list',{"booklist": booklist})
+        # return HttpResponseRedirect('/list',{"booklist": booklist})
+        return redirect('booktest:list')
     except:
         return HttpResponse("删除失败！！！")
 
@@ -79,8 +87,8 @@ def addbookhandler(request):
     book.btitle = btitle
     book.bpub_date = bpub_date
     book.save()
-    return HttpResponseRedirect("/list")
-
+    # return HttpResponseRedirect("/list")
+    return redirect(reverse('booktest:list'))
 
 def updatebook(request, bookid):
     book = BookInfo.objects.get(pk=bookid)
@@ -94,8 +102,8 @@ def updatebookhandler(request, bookid):
     book.btitle = btitle
     book.bpub_date = bpub_date
     book.save()
-    return HttpResponseRedirect("/list")
-
+    # return HttpResponseRedirect("/list")
+    return redirect(reverse('booktest:list'))
 
 def herodelete(request, heroid):
     try:
