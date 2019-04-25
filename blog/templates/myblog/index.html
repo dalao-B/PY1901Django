@@ -84,7 +84,8 @@
                             </div>
                         </header>
                         <div class="entry-content clearfix">
-                            <p>{{article.content|slice:100}}...</p>
+                            {% load extend_fun %}
+                            <p>{{article|markdown_content|slice:100|safe}}...</p>
                             <div class="read-more cl-effect-14">
                                 <a href="#" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
                             </div>
@@ -155,7 +156,7 @@
                     </ul>
                 </div>
                 <div class="rss">
-                    <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>
+                    <a href="{% url 'myblog:rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
                 </div>
             </aside>
         </div>

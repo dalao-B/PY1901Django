@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from . import views
+from .feed import ArticleFeed
 
 app_name = "myblog"
 
@@ -10,4 +11,5 @@ urlpatterns = [
     url(r'^tags/([0-9]+)/$', views.tags, name='tags'),
     url(r'^filetime/(.*?)/(.*?)/$', views.filetime, name='filetime'),
     url(r'^comment/(.*?)/$', views.comment, name='comment'),
+    url(r'^rss/$', ArticleFeed(), name='rss'),
 ]

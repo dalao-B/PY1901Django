@@ -3,7 +3,7 @@ from django.http import HttpResponse,HttpResponseRedirect,request
 from django.shortcuts import reverse,redirect,render
 from  .models import Article, Category, Tags, Comment
 import datetime
-
+import markdown
 
 # Create your views here.
 
@@ -31,6 +31,16 @@ def single(request, id):
     cur_article = Article.objects.get(pk=id)
     cur_article.article_views += 1
     cur_article.save()
+    md = markdown.Markdown(extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+            'markdown.extensions.toc'
+            ])
+    cur_article.content = md.convert(cur_article.content)
+    cur_article.toc = md.toc
+
+
+
     return render(request, 'myblog/single.html', {"cur_article":cur_article, "articlelist": articlelist,
                                                  "categorylist":categorylist, "tagslist":tagslist, "now_time":now_time})
 
