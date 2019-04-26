@@ -95,26 +95,17 @@
                 <a href="">没有文章</a>
                 {% endfor %}
 
-                <!-- 简单分页效果
+
                 <div class="pagination-simple">
-                    <a href="#">上一页</a>
-                    <span class="current">第 6 页 / 共 11 页</span>
-                    <a href="#">下一页</a>
+                    {% if articlelist.has_previous %}
+                    <a href="?page={{articlelist.previous_page_number}}">上一页</a>
+                    {% endif %}
+                    <span class="current">第 {{articlelist.number}} 页 / 共 {{articlelist.paginator.num_pages}} 页</span>
+                    {% if articlelist.has_next %}
+                    <a href="?page={{articlelist.next_page_number}}">下一页</a>
+                    {% endif %}
                 </div>
-                -->
-                <div class="pagination">
-                    <ul>
-                        <li><a href="">1</a></li>
-                        <li><a href="">...</a></li>
-                        <li><a href="">4</a></li>
-                        <li><a href="">5</a></li>
-                        <li class="current"><a href="">6</a></li>
-                        <li><a href="">7</a></li>
-                        <li><a href="">8</a></li>
-                        <li><a href="">...</a></li>
-                        <li><a href="">11</a></li>
-                    </ul>
-                </div>
+
             </main>
             <aside class="col-md-4">
                 <div class="widget widget-recent-posts">

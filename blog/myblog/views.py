@@ -4,6 +4,7 @@ from django.shortcuts import reverse,redirect,render
 from  .models import Article, Category, Tags, Comment
 import datetime
 import markdown
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -13,13 +14,12 @@ def index(request):
     categorylist = Category.objects.all()
     tagslist = Tags.objects.all()
     now_time = datetime.datetime.now()
-    # content = articlelist[0].content
-    # small_text = content[:50]
-    # if small_text == content:
-    #     return render(request, 'myblog/index.html', {"articlelist":articlelist, "small_text":content})
-    # else:
-    #     return render(request, 'myblog/index.html', {"articlelist": articlelist, "small_text": small_text+"..."})
-    return render(request, 'myblog/index.html', {"articlelist": articlelist,
+
+    paginator = Paginator(articlelist, 2)
+    pagenum = request.GET.get("page")
+    pagenum = 1 if pagenum == None else pagenum
+    page = paginator.page(pagenum)
+    return render(request, 'myblog/index.html', {"articlelist": page,
                                                  "categorylist":categorylist, "tagslist":tagslist, "now_time":now_time})
 
 
