@@ -1,0 +1,11 @@
+{% extends "mybooklibrary/layout.html" %}
+{% block title %}主页{% endblock %}
+{% block link %}
+  <a href="http://127.0.0.1:8000/admin/">管理员登录 </a>
+  <a href="{% url 'mybooklibrary:reader_login' %}">读者登录 </a>
+{% endblock %}
+
+{% block body %}
+  <h2>欢迎使用</h2>
+  <img src="/static/img/1.png" alt="" width="680px">
+{% endblock %}
