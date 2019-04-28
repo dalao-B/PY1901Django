@@ -5,6 +5,7 @@ from django.shortcuts import reverse,redirect,render
 from django.http import HttpResponseRedirect, HttpResponse, request
 from . models import Users, Books, Historys
 import datetime,time
+from hashlib import sha1
 
 
 def index(request):
@@ -20,6 +21,7 @@ def reader_login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
+        password = sha1(password.encode('utf8')).hexdigest()
         user = Users.objects.all().filter(username=username)
         if user.__len__() == 0:
             error = 'Invalid username'
@@ -50,6 +52,7 @@ def register(request):
         else:
             username = request.POST['username']
             pwd = request.POST['password']
+            pwd = sha1(pwd.encode('utf8')).hexdigest()
             college = request.POST['college']
             num = request.POST['number']
             email = request.POST['email']
@@ -103,7 +106,7 @@ def reader_modify(request):
             user.save()
             request.session['username'] = username
             return redirect(reverse('mybooklibrary:reader_info'))
-    return render(request, 'mybooklibrary/reader_modify.html', {"user": user, "error":error})
+    return render(request, 'mybooklibrary/reader_modify.html', {"user": user, "error": error})
 
 
 def reader_query(request):
@@ -114,14 +117,14 @@ def reader_query(request):
             if not request.POST['query']:
                 error = 'You have to input the book name'
             else:
-                books = Books.objects.all().filter(title=request.POST['query'])
+                books = Books.objects.all().filter(title__icontains=request.POST['query'])
                 if not books:
                     error = 'Invalid book name'
         else:
             if not request.POST['query']:
                 error = 'You have to input the book author'
             else:
-                books = Books.objects.all().filter(author=request.POST['query'])
+                books = Books.objects.all().filter(author__icontains=request.POST['query'])
                 if not books:
                     error = 'Invalid book author'
     return render(request, 'mybooklibrary/reader_query.html', {'books':books, "error":error})
