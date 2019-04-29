@@ -9,6 +9,7 @@ class Users(models.Model):
     college = models.CharField(max_length=50)
     header = models.ImageField(upload_to='headers',blank=True, null=True)
     user_content = HTMLField(blank=True, null=True)
+    is_active = models.BooleanField(default=False)
     num = models.IntegerField()
     email = models.EmailField()
 
@@ -21,6 +22,7 @@ class Books(models.Model):
     author = models.CharField(max_length=20)
     publish_com = models.CharField(max_length=50)
     publish_date = models.DateField()
+    book_img = models.ImageField(upload_to='book_img', blank=True, null=True)
 
     def __str__(self):
         return "%d %s" % (self.pk, self.title)

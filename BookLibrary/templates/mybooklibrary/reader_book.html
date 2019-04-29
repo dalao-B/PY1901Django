@@ -15,12 +15,15 @@
 	{% endif %}
 	<h2> 书目信息 </h2>
 	{% if book %}
+	<div>
 	<li> ISBN            	{{book.id}} </li>
 	<li> 书名        		{{book.title}} </li>
-	<li> 作者        		{{book.author}} </li>	
+	<li> 作者        		{{book.author}} </li>
 	<li> 出版社     	{{book.publish_com}} </li>
 	<li> 出版日期   	{{book.publish_date}} </li>
+	<li style="list-style: none"><img src="/static/media/{{book.book_img}}" alt=""  width="100px"></li>
 	{% endif %}
+	</div>
 	<div >
 	  <h2 > 借阅信息 </h2>
 	  {% if historys  %}
@@ -39,5 +42,6 @@
 	      <input type=submit value="借阅">
 	    </div>
 	  </form>
+	</div>
 
 {% endblock %}

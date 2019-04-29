@@ -6,6 +6,8 @@ from django.http import HttpResponseRedirect, HttpResponse, request
 from . models import Users, Books, Historys, HotImages
 import datetime,time
 from hashlib import sha1
+from django.core.mail import send_mail, send_mass_mail
+from django.conf import settings
 
 
 def index(request):
@@ -30,6 +32,8 @@ def reader_login(request):
             error = 'Invalid username'
         elif not user[0].pwd == password:
             error = 'Invalid password'
+        elif not user[0].is_active:
+            error = 'Not active'
         else:
             request.session['username'] = username
             return redirect(reverse('mybooklibrary:reader'))
@@ -70,8 +74,18 @@ def register(request):
             user.header = pic
             user.user_content = user_content
             user.save()
+            id = user.pk
+            send_mail("点击激活账户", "<a href = 'http://127.0.0.1:8000/active/%s'>点击：</a>"%(id),
+                      settings.DEFAULT_FROM_EMAIL, [email,"zhibin61@163.com"])
             return redirect(reverse('mybooklibrary:reader_login'))
     return render(request, 'mybooklibrary/register.html', {"error": error})
+
+
+def active(request, id):
+    user = Users.objects.get(pk=id)
+    user.is_active = True
+    user.save()
+    return redirect(reverse('mybooklibrary:reader_login'))
 
 
 def reader_info(request):
@@ -178,4 +192,10 @@ def reader_histroy(request):
     historys = user.historys_set.all()
     return render(request, 'mybooklibrary/reader_histroy.html', {"historys": historys})
 
+
+def mail(request):
+    send_mail("Django","hello,everybody!",
+              settings.DEFAULT_FROM_EMAIL,["zhibin61@163.com","zhibin61@163.com"]
+              )
+    return HttpResponse("发送成功！")
 
