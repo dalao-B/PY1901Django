@@ -1,5 +1,5 @@
 from django.db import models
-
+from tinymce.models import HTMLField
 # Create your models here.
 
 
@@ -8,6 +8,7 @@ class Users(models.Model):
     pwd = models.CharField(max_length=100)
     college = models.CharField(max_length=50)
     header = models.ImageField(upload_to='headers',blank=True, null=True)
+    user_content = HTMLField(blank=True, null=True)
     num = models.IntegerField()
     email = models.EmailField()
 

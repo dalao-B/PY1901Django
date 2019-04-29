@@ -60,6 +60,7 @@ def register(request):
             num = request.POST['number']
             email = request.POST['email']
             pic = request.FILES['header_img']
+            user_content = request.POST["user_content"]
             user = Users()
             user.username = username
             user.pwd = pwd
@@ -67,6 +68,7 @@ def register(request):
             user.num = num
             user.email = email
             user.header = pic
+            user.user_content = user_content
             user.save()
             return redirect(reverse('mybooklibrary:reader_login'))
     return render(request, 'mybooklibrary/register.html', {"error": error})
@@ -91,11 +93,13 @@ def reader_modify(request):
             num = request.POST['number']
             email = request.POST['email']
             pic = request.FILES['header_img']
+            user_content = request.POST["user_content"]
             user.username = username
             user.college = college
             user.num = num
             user.email = email
             user.header = pic
+            user.user_content = user_content
             user.save()
             request.session['username'] = username
             return redirect(reverse('mybooklibrary:reader_info'))
@@ -105,11 +109,15 @@ def reader_modify(request):
             college = request.POST['college']
             num = request.POST['number']
             email = request.POST['email']
+            pic = request.FILES['header_img']
+            user_content = request.POST["user_content"]
             user.username = username
             user.pwd = pwd
             user.college = college
             user.num = num
             user.email = email
+            user.header = pic
+            user.user_content = user_content
             user.save()
             request.session['username'] = username
             return redirect(reverse('mybooklibrary:reader_info'))

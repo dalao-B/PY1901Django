@@ -22,7 +22,9 @@
 	    <dt>邮箱:</dt>
 	    <dd><input type=text name=email size=30 value={{user.email}}> </dd>
 		  <dt>头像：</dt>
-		  <dd><input type="file" name="header_img"></dd>
+		  <dd><input type="file" name="header_img" required></dd>
+		  <dt>个人简介：</dt>
+		  <dd><textarea name="user_content"></textarea></dd>
 	  </dl>
 	  <div class=actions><input type=submit value="确定"></div>
 	</form>
