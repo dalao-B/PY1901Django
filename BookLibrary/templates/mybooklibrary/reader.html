@@ -1,7 +1,11 @@
 {% extends "mybooklibrary/layout.html" %}
 {% block title %} 欢迎使用 {% endblock %}
 {% block link %} 
-	<a href="{% url 'mybooklibrary:logout' %}"> 注销[ {{username}} ] </a>
+	<a href="{% url 'mybooklibrary:logout' %}">
+		注销:
+		[ <img src="/static/media/{{user.header}}" class="img-circle" alt="" width="20px" height="20px">
+		{{username}} ]
+	</a>
 	<a href="{% url 'mybooklibrary:reader_query' %}"> 查询 </a>
 	<a href="{% url 'mybooklibrary:reader_info' %}"> 查看个人信息 </a>
 	<a href="{% url 'mybooklibrary:reader_histroy' %}"> 查看阅读记录 </a>

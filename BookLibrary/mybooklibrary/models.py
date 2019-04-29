@@ -7,6 +7,7 @@ class Users(models.Model):
     username = models.CharField(max_length=20)
     pwd = models.CharField(max_length=100)
     college = models.CharField(max_length=50)
+    header = models.ImageField(upload_to='headers',blank=True, null=True)
     num = models.IntegerField()
     email = models.EmailField()
 
@@ -33,3 +34,11 @@ class Historys(models.Model):
 
     def __str__(self):
         return "%d %s %s" % (self.pk, self.user, self.book)
+
+
+class HotImages(models.Model):
+    img_name = models.CharField(max_length=20)
+    index = models.SmallIntegerField(unique=True)
+    img = models.ImageField(upload_to='hotimages')
+    def __str__(self):
+        return self.img_name

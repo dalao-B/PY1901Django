@@ -3,17 +3,20 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import reverse,redirect,render
 from django.http import HttpResponseRedirect, HttpResponse, request
-from . models import Users, Books, Historys
+from . models import Users, Books, Historys, HotImages
 import datetime,time
 from hashlib import sha1
 
 
 def index(request):
-    return render(request, 'mybooklibrary/index.html')
+    imglist = HotImages.objects.all().order_by("index")
+    return render(request, 'mybooklibrary/index.html', {"imglist": imglist})
 
 
 def reader(request):
-    return render(request, 'mybooklibrary/reader.html',{"username":request.session.get("username")})
+    username = request.session.get("username")
+    user = Users.objects.get(username=username)
+    return render(request, 'mybooklibrary/reader.html',{"username":request.session.get("username"),"user":user})
 
 
 def reader_login(request):
@@ -56,12 +59,14 @@ def register(request):
             college = request.POST['college']
             num = request.POST['number']
             email = request.POST['email']
+            pic = request.FILES['header_img']
             user = Users()
             user.username = username
             user.pwd = pwd
             user.college = college
             user.num = num
             user.email = email
+            user.header = pic
             user.save()
             return redirect(reverse('mybooklibrary:reader_login'))
     return render(request, 'mybooklibrary/register.html', {"error": error})
@@ -85,10 +90,12 @@ def reader_modify(request):
             college = request.POST['college']
             num = request.POST['number']
             email = request.POST['email']
+            pic = request.FILES['header_img']
             user.username = username
             user.college = college
             user.num = num
             user.email = email
+            user.header = pic
             user.save()
             request.session['username'] = username
             return redirect(reverse('mybooklibrary:reader_info'))
@@ -162,3 +169,5 @@ def reader_histroy(request):
     user = Users.objects.get(username=username)
     historys = user.historys_set.all()
     return render(request, 'mybooklibrary/reader_histroy.html', {"historys": historys})
+
+

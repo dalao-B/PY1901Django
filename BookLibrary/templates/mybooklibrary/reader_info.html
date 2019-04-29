@@ -8,6 +8,7 @@
 {% block body  %}
 	<h2> 用户信息 </h2>
 	{% if user %}
+	<li><img src="/static/media/{{user.header}}" class="img-circle" alt="" width="30px" height="30px"> </li>
 	<li> 用户名 {{user.username}} </li>
 	<li> 学院名 {{user.college}} </li>
 	<li> 学号 {{user.num}} </li>
