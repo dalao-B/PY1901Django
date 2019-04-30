@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^reader_histroy/$', views.reader_histroy, name='reader_histroy'),
     url(r'^mail/$', views.mail, name='mail'),
     url(r'^active/(.*?)/$',views.active, name='active'),
+    url(r'^verifycode/$', views.verifycode, name='verifycode'),
 ]

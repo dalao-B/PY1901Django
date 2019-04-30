@@ -1,5 +1,14 @@
 {% extends "mybooklibrary/layout.html" %}
 {% block title%} 读者登录 {% endblock%}
+{% block linkcss %}
+	<script>
+	$(function(){
+		$("#verifycodeimg").click(function(){
+			this.src = '/verifycode/'+"?time="+new Date().getTime()
+		})
+	})
+	</script>
+{% endblock %}
 {% block link%}
 	<a href="{% url 'mybooklibrary:index' %}"> 返回   </a>|
 	<a href="{% url 'mybooklibrary:register' %}"> 注册 </a>
@@ -17,6 +26,8 @@
 	    <dd><input type=text name=username size=30 value="{{ request.form.username}}"> </dd>
 	    <dt>密码:	 </dt>
 	    <dd><input type=password name=password size=30> </dd>
+		  <img src="{% url 'mybooklibrary:verifycode' %}" alt="" id="verifycodeimg">
+	      <input type=text name=verifycode size=15>
 	  </dl>
 	  <div class=actions>
 	    <input type=submit value="登录">
