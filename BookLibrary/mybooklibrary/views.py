@@ -8,6 +8,7 @@ import datetime,time
 from hashlib import sha1
 from django.core.mail import send_mail, send_mass_mail
 from django.conf import settings
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired
 
 
 def index(request):
@@ -75,17 +76,26 @@ def register(request):
             user.user_content = user_content
             user.save()
             id = user.pk
-            send_mail("点击激活账户", "<a href = 'http://127.0.0.1:8000/active/%s'>点击：</a>"%(id),
+            serutil = Serializer(settings.SECRET_KEY,50)
+            resultid = serutil.dumps({"userid":id}).decode("utf8")
+
+            send_mail("点击激活账户", "<a href = 'http://127.0.0.1:8000/active/%s'>点击：</a>"%(resultid),
                       settings.DEFAULT_FROM_EMAIL, [email,"zhibin61@163.com"])
             return redirect(reverse('mybooklibrary:reader_login'))
     return render(request, 'mybooklibrary/register.html', {"error": error})
 
 
-def active(request, id):
-    user = Users.objects.get(pk=id)
-    user.is_active = True
-    user.save()
-    return redirect(reverse('mybooklibrary:reader_login'))
+def active(request, idstr):
+    deser = Serializer(settings.SECRET_KEY, 50)
+    try:
+        obj = deser.loads(idstr)
+        user = Users.objects.get(pk=obj["userid"])
+        user.is_active = True
+        user.save()
+        return redirect(reverse('mybooklibrary:reader_login'))
+    except SignatureExpired as e:
+        return render(request, 'mybooklibrary/active.html')
+
 
 
 def reader_info(request):
